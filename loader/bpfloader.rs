@@ -733,9 +733,9 @@ fn load_libbpf_progs() {
     for file_desc in file_vec {
         if let Err(e) = libbpf_worker(&file_desc) {
             if file_desc.critical {
-                panic!("Error when loading {0}: {e}", file_desc.filename);
+                error!("'critical' Error when loading {0}: {e}\n", file_desc.filename);
             } else {
-                error!("Error when loading {0}: {e}", file_desc.filename);
+                error!("Error when loading {0}: {e}\n", file_desc.filename);
             }
         };
     }
@@ -762,7 +762,7 @@ fn main() {
     info!("Loading legacy BPF progs");
 
     if let Err(e) = create_dir(Path::new("/sys/fs/bpf/vendor")) {
-        panic!("Error during mkdir /sys/fs/bpf/vendor: {e}");
+        error!("Error during mkdir /sys/fs/bpf/vendor: {e}");
     };
 
     // SAFETY: Linking in the existing legacy vendor bpfloader functionality.
